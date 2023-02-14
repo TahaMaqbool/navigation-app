@@ -11,7 +11,7 @@ module HeaderNavigationHelper
   unless current_user.nil?
    nav_items = [
    { text: 'My Projects', url: my_projects_path },
-   { url: inbox_path, block: ("Messages" + (current_user.unread_messages.present? ? " <span class=\"unread-messages\">#{current_user.unread_messages.count}<span>" : '')).html_safe }
+   { url: inbox_path, block: "Messages#{unread_messages_count_html}".html_safe }
    ]
    nav_items.unshift({ text: 'My Company', url: company_dashboard_path }) if current_user.client?
    nav_items[0] = { text: 'Find Projects', url: contests_path } unless current_user.client?
@@ -32,12 +32,7 @@ module HeaderNavigationHelper
    { text: "Find #{current_user.client? ? 'Creatives' : 'Collaborators'}", url: profiles_path }
    ]
    nav_items.unshift({ text: 'Latest Ideas', url: contest_ideas_path(current_user.jury_in_contest) }) unless current_user.jury_in_contest.nil?
-
-   if original_user
-    nav_items.push({ text: '☯ Excarnate', url: unpretend_path, options: { style: 'color: green' } })
-   else
-    nav_items.push({ text: 'Log out', url: logout_path })
-   end
+   nav_items.push(excarnate_or_logout_link)
   end
 
   nav_items
@@ -46,10 +41,23 @@ module HeaderNavigationHelper
  private
 
  def current_user
-  @current_user ||= User.find_by_id(session[:user_id])
+  @current_user ||= User.find_by(id: session[:user_id])
  end
 
  def original_user
-  @original_user ||= User.find_by_id(session[:original_user_id])
+  @original_user ||= User.find_by(id: session[:original_user_id])
+ end
+
+ def unread_messages_count_html
+  count = current_user.unread_messages.count
+  count > 0 ? " <span class=\"unread-messages\">#{count}<span>" : ''
+ end
+
+ def excarnate_or_logout_link
+  if original_user
+   { text: '☯ Excarnate', url: unpretend_path, options: { style: 'color: green' } }
+  else
+   { text: 'Log out', url: logout_path }
+  end
  end
 end
