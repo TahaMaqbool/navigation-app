@@ -8,20 +8,16 @@ module HeaderNavigationHelper
   { text: 'Blog', url: "#{APP_URL}/blog" }
   ]
 
-  if current_user
+  unless current_user.nil?
    nav_items = [
    { text: 'My Projects', url: my_projects_path },
    { url: inbox_path, block: ("Messages" + (current_user.unread_messages.present? ? " <span class=\"unread-messages\">#{current_user.unread_messages.count}<span>" : '')).html_safe }
    ]
-
-   if current_user.client?
-    nav_items.unshift({ text: 'My Company', url: company_dashboard_path })
-   else
-    nav_items[0] = { text: 'Find Projects', url: contests_path }
-   end
-  elsif client
-   nav_items.insert(1, { text: 'About Us', url: "#{APP_URL}/about" })
+   nav_items.unshift({ text: 'My Company', url: company_dashboard_path }) if current_user.client?
+   nav_items[0] = { text: 'Find Projects', url: contests_path } unless current_user.client?
   end
+
+  nav_items.insert(1, { text: 'About Us', url: "#{APP_URL}/about" }) if client && current_user.nil?
 
   nav_items
  end
@@ -29,14 +25,13 @@ module HeaderNavigationHelper
  def nav_secondary
   nav_items = []
 
-  if current_user
+  unless current_user.nil?
    nav_items = [
    { text: 'My Profile', url: profile_path(current_user.profile) },
    { text: 'Settings', url: edit_profile_path(current_user.profile) },
    { text: "Find #{current_user.client? ? 'Creatives' : 'Collaborators'}", url: profiles_path }
    ]
-
-   nav_items.unshift({ text: 'Latest Ideas', url: contest_ideas_path(current_user.jury_in_contest) }) if current_user.jury_in_contest
+   nav_items.unshift({ text: 'Latest Ideas', url: contest_ideas_path(current_user.jury_in_contest) }) unless current_user.jury_in_contest.nil?
 
    if original_user
     nav_items.push({ text: '☯ Excarnate', url: unpretend_path, options: { style: 'color: green' } })
