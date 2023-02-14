@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  unread_messages: 1
+  jury_in_contest: false
+  client: false
+  profile: MyString
+
+two:
+  unread_messages: 1
+  jury_in_contest: false
+  client: false
+  profile: MyString
