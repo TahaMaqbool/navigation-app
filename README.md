@@ -1,24 +1,33 @@
-# README
+## Navigation App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Build Instructions
+Clone the repository and run the following commands in the root directory of the project:
 
-Things you may want to cover:
+``git clone git@github.com:TahaMaqbool/navigation-app.git``
 
-* Ruby version
+Go to the project directory:
 
-* System dependencies
+``cd navigation-app``
 
-* Configuration
+Now run the bundle command to install the gems:
 
-* Database creation
+``bundle install``
 
-* Database initialization
+Setup the database:
 
-* How to run the test suite
+``rails db:setup``
 
-* Services (job queues, cache servers, search engines, etc.)
+This will create the database, run the migrations.
 
-* Deployment instructions
+### Running tests
+Run the following command to run the tests:
 
-* ...
+``rspec``
+
+* Running tests for an specific file:
+```bash
+rspec spec/helpers/header_navigation_helper_spec.rb
+```
+
+
+Feel free to contact me if you have any problems running the app or questions send me email at taha.maqbool96@gmail.com
