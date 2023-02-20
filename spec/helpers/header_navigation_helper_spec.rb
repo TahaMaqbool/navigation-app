@@ -30,6 +30,7 @@ RSpec.describe HeaderNavigationHelper, type: :helper do
    before do
     allow(helper).to receive(:current_user).and_return(nil)
    end
+
    it "returns nav items for client" do
     nav_items = helper.nav_primary(client: true)
     expect(nav_items.size).to eq(3)

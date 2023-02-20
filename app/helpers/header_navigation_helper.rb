@@ -1,5 +1,6 @@
 module HeaderNavigationHelper
  APP_URL = 'http://www.my_app.test'
+
  def nav_primary(client: false)
   nav = []
   if current_user
@@ -28,6 +29,7 @@ module HeaderNavigationHelper
  end
 
  private
+
  def inbox_block
   "Messages#{unread_messages_block}"
  end
@@ -64,5 +66,6 @@ module HeaderNavigationHelper
  def logout_link
   { text: 'Log out', url: logout_path }
  end
+
  def current_user; end; def current_profile; end; def original_user; end; def unpretend_path; end
 end
