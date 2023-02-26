@@ -9,8 +9,9 @@ module HeaderNavigationHelper
    nav.unshift(client ? company_link : find_projects_link)
   else
    nav.push({ text: 'How it works', url: profiles_path })
+   nav.push(about_us_link) if client
+   nav.unshift(browse_projects_link) unless client
    nav.push({ text: 'Blog', url: "#{APP_URL}/blog" })
-   nav.push(client ? about_us_link : browse_projects_link)
   end
   nav
  end
@@ -36,7 +37,7 @@ module HeaderNavigationHelper
 
  def unread_messages_block
   current_user.unread_messages.present? ?
-  " <span class=\"unread-messages\">#{current_user.unread_messages.count}</span>".html_safe : ''
+  " <span class=\"unread-messages\">#{current_user.unread_messages.count}<span>".html_safe : ''
  end
 
  def company_link
